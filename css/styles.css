@@ -1,0 +1,10 @@
+h1{
+	text-align: center;
+	color: #ffb366;
+	font-weight: 100;
+}
+.panel > .panel-heading{
+	background-image: none;
+	background-color: #ffb366;
+	color: white;
+}

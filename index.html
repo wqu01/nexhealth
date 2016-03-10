@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html ng-app="appointments">
+        <head>
+        	<title> View Appointments </title>
+            <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+            <link rel="stylesheet" type="text/css" href="css/styles.css" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+            <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        </head>
+        <body ng-controller="ApptController">
+               <!--<p> {{currentDate }} </p>-->
+        	<div class="container">
+        		<h1> View Your Appointments </h1>
+        		<div class="panel-group">
+        			<div class="panel panel-default">
+        				<div class="panel-heading">
+		        			<h4 class="panel-title"><a data-toggle="collapse" href="#in24hrs"> In 24 Hours </a></h4>
+		        		</div>
+
+		        		<div id="in24hrs" class="panel-collapse collapse.in">
+		        			<table class="table">
+		        				<tbody>
+				        			<tr ng-repeat="data in results.data | orderBy:data.appointment_time:true" ng-show="in24Hrs(data.appointment_time)">
+				               		
+									<td ng-if="data.patient_name">{{data.patient_name}}</td>
+				               		<td ng-if="!data.patient_name">{{data.patient_name}}</td>
+				               		<!-- {{data.appointment_time | date:'yyyy-MM-dd HH:mm:ss Z' }} -->
+				               		<td>{{inCurrentTimeZone(data.appointment_time)}}</td>
+				               		<td>{{data.provider.name}}</td>
+				               		<td>{{data.institution.name}}</td>
+
+			               			</tr>
+			               			
+			               		</tbody>
+			               	</table>
+			            </div>
+	                </div>
+
+					<div class="panel panel-default">
+        				<div class="panel-heading">
+        					<h4 class="panel-title"><a data-toggle="collapse" href="#upcoming"> Upcoming </a></h4>
+		        		</div>
+
+	        			<div id="upcoming" class="panel-collapse collapse.in">
+	        				<table class="table">
+		        				<tbody>
+			               			<tr class="upcoming" ng-repeat="data in results.data | orderBy:data.appointment_time:true" ng-show="!data.is_past">
+			               	
+										<td ng-if="data.patient_name">{{data.patient_name}}</td>
+					               		<td ng-if="!data.patient_name">{{data.patient_name}}</td>
+					               		<!-- {{data.appointment_time | date:'yyyy-MM-dd HH:mm:ss Z' }} -->
+					               		<td>{{inCurrentTimeZone(data.appointment_time)}}</td>
+					               		<td>{{data.provider.name}}</td>
+					               		<td>{{data.institution.name}}</td>
+			               	
+			               			</tr>
+			               		</tbody>
+			               	</table>
+			            </div>
+	           		</div>
+
+					<div class="panel panel-default">
+        				<div class="panel-heading">
+        					<h4 class="panel-title"><a data-toggle="collapse" href="#past"> Past </a></h4>
+		        		</div>
+
+	               		<div id="past" class="panel-collapse collapse.in">
+	               			<table class="table">
+		        				<tbody>
+		               				<tr class="past" ng-repeat="data in results.data | orderBy:data.appointment_time:true" ng-show="data.is_past">
+					               		<td ng-if="data.patient_name">{{data.patient_name}}</td>
+					               		<td ng-if="!data.patient_name">Unavailable</td>
+					               		<td>{{inCurrentTimeZone(data.appointment_time)}}</td>
+					               		<td>{{data.provider.name}}</td>
+					               		<td>{{data.institution.name}}</td>
+		               				</tr>
+			               		</tbody>
+			               	</table>
+		               	</div>
+	                </div>
+
+	               <div class="panel panel-default">
+        				<div class="panel-heading">
+        					<h4 class="panel-title"><a data-toggle="collapse" href="#cancelled"> Cancelled </a></h4>
+		        		</div>
+
+		        		<div id="cancelled" class="panel-collapse collapse.in">
+		        			<table class="table">
+		        				<tbody>
+			               			<tr class="past" ng-repeat="data in results.data | orderBy:data.appointment_time:true" ng-show="data.cancelled">
+					               		<td ng-if="data.patient_name">{{data.patient_name}}</td>
+					               		<td ng-if="!data.patient_name">Unavailable</td>
+					               		<td>{{inCurrentTimeZone(data.appointment_time)}}</td>
+					               		<td>{{data.provider.name}}</td>
+					               		<td>{{data.institution.name}}</td>
+			               			</tr>
+			               		</tbody>
+			               </table>
+			            </div>
+            		</div>
+            	</div> <!-- panel group div -->
+            </div>  <!-- container div -->
+                
+            <script type="text/javascript" src="js/angular.min.js"></script>
+            <script type="text/javascript" src="app.js"></script>
+        </body>
+</html>
